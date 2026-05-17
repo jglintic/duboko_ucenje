@@ -117,10 +117,10 @@ test_images_seq, test_angles_seq = create_sequences(
 )
 
 print("Train sequence shape:", train_images_seq.shape)
-print("Train labels shape:", train_angles_seq.shape)
+print("Train angles shape:", train_angles_seq.shape)
 
 print("Test sequence shape:", test_images_seq.shape)
-print("Test labels shape:", test_angles_seq.shape)
+print("Test angles shape:", test_angles_seq.shape)
 
 # CNN MODEL
 print("\nBuilding CNN regression model...")
@@ -203,10 +203,10 @@ def draw_steering_angle(image, angle):
     
     h, w, _ = image.shape
     
-    center_x = w // 2
-    center_y = h
+    center_x = w // 2 # sredina slike
+    center_y = h # dno slike
     
-    length = 40
+    length = 40 # duzina strelice
     
     end_x = center_x + length * np.sin(angle)
     end_y = center_y - length * np.cos(angle)
@@ -296,7 +296,6 @@ def detect_lane_changes(predictions, center_threshold=0.08, lane_threshold=0.22,
     return lane_changes
     
 def create_video_from_predictions(images, predictions, output_path="test_output.mp4"):
-    
     writer = imageio.get_writer(output_path, format="FFMPEG", fps=20)
     
     lane_changes = detect_lane_changes(predictions)
