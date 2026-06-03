@@ -60,15 +60,36 @@ print("\nLoading training images...")
 train_images = []
 train_angles = []
 
+STRAIGHT_THRESHOLD = 0.05
+STRAIGHT_KEEP_PROB = 0.25
+
 for _, row in train_df.iterrows():
+
+    angle = float(row["steering"])
+
+    # izbacujemo deo voznje pravo
+    if abs(angle) < STRAIGHT_THRESHOLD:
+        if np.random.rand() > STRAIGHT_KEEP_PROB:
+            continue
+
     img = load_image(row["center"])
+
+    # original
     train_images.append(img)
-    train_angles.append(row["steering"])
+    train_angles.append(angle)
+
+    # augmentacija za krivine
+    if abs(angle) > 0.10:
+
+        flipped_img = np.fliplr(img)
+
+        train_images.append(flipped_img)
+        train_angles.append(-angle)
 
 train_images = np.array(train_images)
 train_angles = np.array(train_angles)
 
-print("Train images loaded:")
+print("Train images loaded after balancing:")
 print("Images shape:", train_images.shape)
 print("Angles shape:", train_angles.shape)
 
