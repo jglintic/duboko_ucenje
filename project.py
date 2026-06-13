@@ -165,7 +165,6 @@ x = keras.layers.Dropout(0.4)(x)
 
 x = keras.layers.Dense(32, activation="relu")(x)
 x = keras.layers.Dropout(0.3)(x)
-#x = keras.layers.Dense(10, activation="relu")(x)
 
 # jedan izlaz - regresija
 outputs = keras.layers.Dense(1)(x)
